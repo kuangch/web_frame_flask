@@ -1,0 +1,1 @@
+There are files both in center and local

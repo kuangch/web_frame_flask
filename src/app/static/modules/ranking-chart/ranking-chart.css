@@ -1,0 +1,64 @@
+/**
+ * Created by kuangch on 2016/10/17.
+ */
+
+.rank-chart-title{
+    width: 100%;
+    background-color: gainsboro;
+    height: 50px;
+    line-height: 50px;
+    color: #197EE8;
+    margin-bottom: 8px;
+}
+.rank-chart-title .name{
+    height: 50px;
+    line-height: 50px;
+    margin-left: 1.2%;
+}
+
+.rank-chart-item{
+    width: 100%;
+    background-color: white;
+    height: 30px;
+    line-height: 30px;
+}
+.rank-chart-item .serial-number{
+    margin-left: 1.2%;
+    display: inline-block;
+    background-color: #F5E401;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+.rank-chart-item .name{
+    margin-left: 1%;
+    display: inline-block;
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-decoration: none;
+    vertical-align: top;
+    white-space: nowrap;
+    font-size: 14px;
+}
+.rank-chart-item .bar-container{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    width: 60%;
+}
+.rank-chart-item .bar-container .value-bar{
+    transition: width 1s ease-out;
+    display: inline-block;
+    background-color: #24adff;
+    height: 12px;
+    border-radius: 6px;
+    width: 0;
+}
+.rank-chart-item .value{
+    display: inline-block;
+    float: right;
+    margin-right: 1.2%;
+}
