@@ -27,3 +27,8 @@ class GlobalInfo():
     app_root_path = None
     log_path = None
 
+    # serialized data save path
+    persistent_data_path = None
+
+
+

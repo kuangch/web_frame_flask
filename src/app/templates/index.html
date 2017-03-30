@@ -3,10 +3,23 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <style>
+        .person{
+            border: 1px gray solid;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
 </head>
 <body ng-controller="ctrl_index">
-<div>
+<div class="person">
    <div>姓名:{{person.name}}</div><div>性别:{{person.sex}}</div>
+</div>
+<div class="person">
+   <div>姓名:{{person2.name}}</div><div>性别:{{person2.sex}}</div>
+</div>
+<div class="person">
+   <div>姓名:{{person3.name}}</div><div>性别:{{person3.sex}}</div>
 </div>
 
 </body>
@@ -37,7 +50,13 @@
                 // start record
                 socket.on(MsgTpye.HEADER_PERSON_PASS_INFO, function (msg) {
                     var person = JSON.parse(msg.data);
-                    $scope.person = person;
+
+                    if(person.id && person.id=='2')
+                        $scope.person2 = person;
+                    else if(person.id && person.id=='3')
+                        $scope.person3 = person;
+                    else
+                        $scope.person = person;
                     $scope.$apply();
 
                 });

@@ -51,6 +51,9 @@ class InitHelper(object):
         try:
             GlobalInfo.log_path = app_root_path + os.sep + 'log'
 
+            GlobalInfo.persistent_data_path = os.path.dirname(os.path.abspath(app_root_path)) \
+                                              + '/web_frame_flask_serialize_data/'
+
             # init path
             if os.path.exists(GlobalInfo.log_path) is False:
                 os.makedirs(GlobalInfo.log_path)

@@ -5,5 +5,5 @@
 # all port list of zmq connect
 
 class ZMQPort():
-    RQ = '5010'
-    SUBS = '5012'
+    RQ = '6000'
+    SUBS = '8101'

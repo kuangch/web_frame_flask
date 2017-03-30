@@ -19,6 +19,7 @@ from utils.global_info import GlobalInfo
 class SubsMsgServer(threading.Thread):
 
     _logger = logging.getLogger(GlobalInfo.logger_main)
+    run_flag = True
 
     def __init__(self, ip, port):
 
@@ -33,7 +34,7 @@ class SubsMsgServer(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        while True:
+        while self.run_flag:
             msg = self._response.recv()
             msg_obj = TransMsg.GetRootAsTransMsg(msg, 0)
             msg_type = msg_obj.Type()

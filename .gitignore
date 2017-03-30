@@ -1,5 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
-src/app/log/
+src/app/log
 *.pyc
 src/app/static/cache
+src/common
+src/web_frame_flask_serialize_data

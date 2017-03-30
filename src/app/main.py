@@ -10,6 +10,7 @@ from msg_trans import SocketioHelper, ZMQPort
 from msg_trans.thread_subs_msg import SubsMsgServer
 
 from routes import *
+from services.msg_center.portal_msg_manager import PortalMsgManager
 from services.timer_task.timer_task_executor import execute_timer_tasks
 from utils.global_info import GlobalInfo
 from utils.init_helper import InitHelper
@@ -25,6 +26,9 @@ def setup():
     # init app path
     InitHelper.init_app_path(app.root_path)
 
+    # init persistent data to mam
+    InitHelper.init_serialize_data(GlobalInfo.persistent_data_path)
+
     # add global config for frontend
     InitHelper.init_frontend_conf(app)
 
@@ -35,12 +39,12 @@ def setup():
     SocketioHelper.set_socket(socketio)
 
     # thread that get pass person info
-    SubsMsgServer("localhost", ZMQPort.SUBS).start()
+    PortalMsgManager.init_portals()
 
     logger_main.info('setup server end')
 
     # timer tasks
-    execute_timer_tasks()
+    # execute_timer_tasks()
 
     logger_main.info('server start success')
 
