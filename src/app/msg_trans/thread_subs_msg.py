@@ -3,6 +3,7 @@
 # Copyright (c) 2016 Dilusense Inc. All Rights Reserved.
 
 # subscriber for camera frame data
+import json
 
 import threading
 import traceback
@@ -25,6 +26,7 @@ class SubsMsgServer(threading.Thread):
 
         context = zmq.Context()
         self._response = context.socket(zmq.SUB)
+        self._ip = ip
         try:
             self._response.connect("tcp://"+ip+":" + port)
             self._response.setsockopt_string(zmq.SUBSCRIBE, ''.decode('utf-8'))
@@ -41,7 +43,14 @@ class SubsMsgServer(threading.Thread):
 
             if msg_type == MsgTpye.ZMQ_MSGTYPE_PERSON_PASS_INFO:
                 self._logger.debug('recv person pass info msg: ' + msg_obj.Content())
-                SocketioHelper.send_msg2frontend(SocketioHelper.HEADER_PERSON_PASS_INFO, msg_obj.Content())
+                try:
+                    msg = json.loads(msg_obj.Content())
+                    msg['ip'] = self._ip
+                    data = json.dumps({'ip': self._ip, 'data': msg})
+                except:
+                    data = ''
+
+                SocketioHelper.send_msg2frontend(SocketioHelper.HEADER_PERSON_PASS_INFO, data)
 
 
 if __name__ == '__main__':

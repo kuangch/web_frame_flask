@@ -4,22 +4,47 @@
     <meta charset="UTF-8">
     <title></title>
     <style>
-        .person{
+        .person {
             border: 1px gray solid;
             padding: 5px;
             margin-bottom: 5px;
+        }
+
+        .ng-cloak {
+            display: none;
         }
     </style>
 </head>
 <body ng-controller="ctrl_index">
 <div class="person">
-   <div>姓名:{{person.name}}</div><div>性别:{{person.sex}}</div>
+    <img ng-cloak class="ng-cloak" width="120px" height="160px" src="data:image/png;base64,{{person.id_image}}"/>
+
+    <div>IP:{{person.ip}}</div>
+    <div>姓名:{{person.name}}</div>
+    <div>性别:{{person.gender}}</div>
+    <div>时间:{{person.pass_time}}</div>
+    <div>黑名单报警tag:{{person.blacklist_tag}}</div>
+    <div>serial_number:{{person.serial_number}}</div>
 </div>
 <div class="person">
-   <div>姓名:{{person2.name}}</div><div>性别:{{person2.sex}}</div>
+    <img ng-cloak class="ng-cloak" width="120px" height="160px" src="data:image/png;base64,{{person2.id_image}}"/>
+
+    <div>IP:{{person2.ip}}</div>
+    <div>姓名:{{person2.name}}</div>
+    <div>性别:{{person2.gender}}</div>
+    <div>时间:{{person2.pass_time}}</div>
+    <div>黑名单报警tag:{{person2.blacklist_tag}}</div>
+    <div>serial_number:{{person2.serial_number}}</div>
 </div>
 <div class="person">
-   <div>姓名:{{person3.name}}</div><div>性别:{{person3.sex}}</div>
+    <img ng-cloak class="ng-cloak" width="120px" height="160px" src="data:image/png;base64,{{person3.id_image}}"/>
+
+    <div>IP:{{person3.ip}}</div>
+    <div>姓名:{{person3.name}}</div>
+    <div>性别:{{person3.gender}}</div>
+    <div>时间:{{person3.pass_time}}</div>
+    <div>黑名单报警tag:{{person3.blacklist_tag}}</div>
+    <div>serial_number:{{person3.serial_number}}</div>
 </div>
 
 </body>
@@ -51,12 +76,12 @@
                 socket.on(MsgTpye.HEADER_PERSON_PASS_INFO, function (msg) {
                     var person = JSON.parse(msg.data);
 
-                    if(person.id && person.id=='2')
-                        $scope.person2 = person;
-                    else if(person.id && person.id=='3')
-                        $scope.person3 = person;
+                    if (person.ip && person.ip == 'localhost')
+                        $scope.person2 = person.data;
+                    else if (person.ip && person.ip == '10.0.1.50')
+                        $scope.person3 = person.data;
                     else
-                        $scope.person = person;
+                        $scope.person = person.data;
                     $scope.$apply();
 
                 });
