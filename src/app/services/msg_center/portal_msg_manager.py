@@ -41,6 +41,13 @@ class PortalMsgManager(object):
         sms_keys = ([])
         ip_keys = ([])
 
+        if type(ips) == dict:
+            ip_keys_store = {}
+        elif type(ips) == list:
+            ip_keys_store = []
+        else:
+            raise NameError('parameter of this method must be dict or list')
+
         try:
             ip_keys = set(ips)
         except:
@@ -54,6 +61,13 @@ class PortalMsgManager(object):
         old_ips = sms_keys - ip_keys
         intersection_ips = ip_keys & sms_keys
 
+        for ip_key in ip_keys:
+            if type(ips) == dict:
+                ip_keys_store[ip_key] = ips[ip_key]
+            else:
+                ip_keys_store.append(ip_key)
+
+
         for ip in intersection_ips:
             logging.getLogger(GlobalInfo.logger_main).info('portal of ip: ' + ip + ' msg passageway is already exits')
 
@@ -65,5 +79,5 @@ class PortalMsgManager(object):
         for ip in new_ips:
             PortalMsgManager.add_new_conn(ip)
 
-        SerializeUtils.update(MyConstant.portal_ips_serialize_data_key, ip_keys)
+        SerializeUtils.update(MyConstant.portal_ips_serialize_data_key, ip_keys_store)
 
