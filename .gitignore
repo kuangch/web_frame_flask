@@ -5,3 +5,5 @@ src/app/log
 src/app/static/cache
 src/common
 src/web_frame_flask_serialize_data
+node_modules
+rev

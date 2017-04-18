@@ -3,17 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <style>
-        .person {
-            border: 1px gray solid;
-            padding: 5px;
-            margin-bottom: 5px;
-        }
 
-        .ng-cloak {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="static/css/test.css">
 </head>
 <body ng-controller="ctrl_index">
 <div class="person">
@@ -53,39 +44,4 @@
 <script src="/static/modules/angularjs/angular.min.js" type="text/javascript"></script>
 <script src="/static/modules/angularjs/angular-animate.min.js" type="text/javascript"></script>
 <script src="/static/modules/socketio/socket.io.min.js"></script>
-<script>
-    var SOCKET_NAMESPACE = '/notification_push';
-    var MsgTpye = {
-        HEADER_PERSON_PASS_INFO: "person_pass_info"
-    };
-    var module = angular.module('app_index', ['ngAnimate']);
-    module.controller(
-            'ctrl_index', function ($scope, $http) {
-
-
-                // socket connect
-                socket = io.connect('http://' + document.domain + ':' + location.port + SOCKET_NAMESPACE);
-                socket.on('connect', function () {
-                    console.log('connect');
-                });
-                socket.on('disconnect', function () {
-                    console.log('disconnect');
-                });
-
-                // start record
-                socket.on(MsgTpye.HEADER_PERSON_PASS_INFO, function (msg) {
-                    var person = JSON.parse(msg.data);
-
-                    if (person.ip && person.ip == 'localhost')
-                        $scope.person2 = person.data;
-                    else if (person.ip && person.ip == '10.0.1.50')
-                        $scope.person3 = person.data;
-                    else
-                        $scope.person = person.data;
-                    $scope.$apply();
-
-                });
-
-            }
-    );
-</script>
+<script src="/static/js/test.js"></script>

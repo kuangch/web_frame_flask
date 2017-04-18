@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "gulp":"3.9.1",
+    "gulp-rev":"7.1.2",
+    "gulp-rev-collector":"1.1.1",
+    "run-sequence":"1.2.2"
+  }
+}
