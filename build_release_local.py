@@ -22,6 +22,9 @@ class globals():
 
     curr_time = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
 
+    VERSION_INFO_V = 'v0.1'
+    VERSION_INFO_T = time.strftime('%Y-%m-%d %H:%M', time.localtime(time.time()))
+
 
 
 def get_src_path():
@@ -33,11 +36,15 @@ def get_output_path():
     user_dir = os.environ['HOME']
     p = subprocess.Popen(['git', 'describe', '--tags'], stdout=subprocess.PIPE)
     tag = p.stdout.readline()
-    tag = tag[:-1]
     p.wait()
     if tag == '':
-        tag = 'no_tag'
-    return user_dir + '/build/' + globals.PROJECT_NAME + '/R' + globals.curr_time + '_' + tag + '/release/'
+        globals.VERSION_INFO_V = 'develop'
+    else:
+        if len(tag) > 10:
+            globals.VERSION_INFO_V = tag[:-10]
+        else:
+            globals.VERSION_INFO_V = tag[:-1]
+    return user_dir + '/build/' + globals.PROJECT_NAME + '/R' + globals.curr_time + '_' + globals.VERSION_INFO_V + '/release/'
 
 
 def update_git():
@@ -85,6 +92,9 @@ def build_local(src_path, dst_path, remove_conf):
     # 3.copy common file
     # copy_common(src_path, dst_path, 'local')
 
+    # change version of project
+    change_version(local_path_dst + os.sep + 'version_info.py')
+
     # 4.compile file and delete .py file
     compileall.compile_dir(local_path_dst)
 
@@ -98,6 +108,20 @@ def build_local(src_path, dst_path, remove_conf):
 
     if remove_conf:
         delete_config_file(local_path_dst + '/config/app_config.conf')
+
+
+def change_version(version_file_path):
+    version_file = open(version_file_path, 'r')
+    file_object_save = None
+    try:
+        stringsave = "VERSION_INFO = '" + globals().VERSION_INFO_V + "@" + globals().VERSION_INFO_T + "'"
+        file_object_save = open(version_file_path, 'w')
+        file_object_save.write(stringsave)
+        print('modify version file success')
+    finally:
+        version_file.close()
+        if file_object_save:
+            file_object_save.close()
 
 
 def modify_config_file(path):
