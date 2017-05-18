@@ -5,6 +5,7 @@
 
 class MyConstant():
     portal_ips_serialize_data_key = 'portal_ips'
+    sys_config_serialize_data_key = 'sys_conf'
 
 
 

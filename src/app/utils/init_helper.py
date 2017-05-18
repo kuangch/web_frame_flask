@@ -6,12 +6,14 @@
 import logging
 import os
 import traceback
-import pickle
 
 from config_helper import ConfigHelper
 from global_info import GlobalInfo
 from custom_libs.file_encoding import trim_file_bom
+from routes.config import front_conf
+from utils.my_constant import MyConstant
 from utils.serialize_data import SerializeData
+from utils.serialize_utils import SerializeUtils
 
 
 class InitHelper(object):
@@ -52,13 +54,16 @@ class InitHelper(object):
             GlobalInfo.log_path = app_root_path + os.sep + 'log'
 
             GlobalInfo.persistent_data_path = os.path.dirname(os.path.abspath(app_root_path)) \
-                                              + '/web_frame_flask_serialize_data/'
+                                              + os.sep \
+                                              + (GlobalInfo.local_data_dir_name or 'web_frame_flask_serialize_data') \
+                                              + os.sep
 
             # init path
             if os.path.exists(GlobalInfo.log_path) is False:
                 os.makedirs(GlobalInfo.log_path)
-            if os.path.exists(GlobalInfo.app_root_path) is False:
-                os.makedirs(GlobalInfo.app_root_path)
+            if os.path.exists(GlobalInfo.persistent_data_path) is False:
+                os.makedirs(GlobalInfo.persistent_data_path)
+
 
             return True
 
@@ -69,30 +74,26 @@ class InitHelper(object):
             return False
 
     @staticmethod
-    def init_serialize_data(persistent_data_path):
-        logger_main = logging.getLogger(GlobalInfo.logger_main)
-        try:
-            # init serialize data
-            pd = open(persistent_data_path + 'persistent_data', 'r')
-            SerializeData().init(pickle.load(pd))
-            return True
-
-        except:
-
-            logger_main.info('persistent data path not exit')
-            return False
+    def init_sys_conf():
+           logger_main = logging.getLogger(GlobalInfo.logger_main)
+           try:
+               SerializeData()\
+                   .update(MyConstant.sys_config_serialize_data_key,
+                           SerializeUtils.get(MyConstant.sys_config_serialize_data_key))
+               return True
+           except:
+               logger_main.info('persistent data path not exit')
+               return False
 
     @staticmethod
     def init_frontend_conf(app_instance):
         logger_main = logging.getLogger(GlobalInfo.logger_main)
         try:
             # add global config for offline map
-            front_conf = {}
-
             app_instance.add_template_global(front_conf, 'front_conf')
             return True
 
         except:
 
-            logger_main.info('init offline map config filed')
+            logger_main.info('init front config filed')
             return False

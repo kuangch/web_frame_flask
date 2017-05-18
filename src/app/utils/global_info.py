@@ -30,5 +30,7 @@ class GlobalInfo():
     # serialized data save path
     persistent_data_path = None
 
+    local_data_dir_name = None
+
 
 

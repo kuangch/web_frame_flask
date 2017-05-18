@@ -26,8 +26,8 @@ def setup():
     # init app path
     InitHelper.init_app_path(app.root_path)
 
-    # init persistent data to mam
-    InitHelper.init_serialize_data(GlobalInfo.persistent_data_path)
+    # init system config
+    InitHelper.init_sys_conf()
 
     # add global config for frontend
     InitHelper.init_frontend_conf(app)
