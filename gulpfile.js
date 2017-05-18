@@ -4,9 +4,10 @@
 
 //引入gulp和gulp插件
 var gulp = require('gulp'),
-    sass = require('gulp-sass');
+    sass = require('gulp-sass'),
     runSequence = require('run-sequence'),
     rev = require('gulp-rev'),
+    convertNewline = require("gulp-convert-newline"),
     revCollector = require('gulp-rev-collector');
 
 //定义css、js源文件路径
@@ -56,6 +57,9 @@ gulp.task('dev', function (done) {
 gulp.task('sass', function () {
   return gulp.src(sassSrc)
     .pipe(sass().on('error', sass.logError))
+    .pipe(convertNewline({
+            newline: "lf"
+        }))
     .pipe(gulp.dest('src/app/static/css'));
 });
 
