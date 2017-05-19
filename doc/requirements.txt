@@ -35,6 +35,14 @@ flatbuffers==2015.8.19.0
 # zmq
 pyzmq==14.7.0
 
+# excel document tools
+xlrd==1.0.0
+xlwt==1.1.2
+
+# net request
+requests==2.8.0
+
+
 
 
 
